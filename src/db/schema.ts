@@ -1,0 +1,247 @@
+import {
+  boolean,
+  index,
+  integer,
+  jsonb,
+  pgTable,
+  real,
+  serial,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
+import type { BandwidthSample, ProbeStage, ValidationFinding } from "@/lib/types";
+
+export const profiles = pgTable(
+  "nora_profiles",
+  {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    group: text("group").notNull().default("Default"),
+    protocol: text("protocol").notNull(),
+    core: text("core").notNull(),
+    transport: text("transport").notNull(),
+    securityLayer: text("security_layer").notNull().default("tls"),
+    serverAddress: text("server_address").notNull(),
+    serverPort: integer("server_port").notNull(),
+    uuid: text("uuid"),
+    password: text("password"),
+    publicKey: text("public_key"),
+    privateKey: text("private_key"),
+    presharedKey: text("preshared_key"),
+    sni: text("sni"),
+    host: text("host"),
+    path: text("path"),
+    serviceName: text("service_name"),
+    flow: text("flow"),
+    fingerprint: text("fingerprint").default("chrome"),
+    alterId: integer("alter_id").default(0),
+    encryption: text("encryption"),
+    mtu: integer("mtu").default(1420),
+    dnsPrimary: text("dns_primary").default("1.1.1.1"),
+    dnsSecondary: text("dns_secondary").default("1.0.0.1"),
+    allowedIps: text("allowed_ips").default("0.0.0.0/0, ::/0"),
+    keepalive: integer("keepalive").default(25),
+    blockingMode: text("blocking_mode").notNull().default("rule"),
+    killSwitch: boolean("kill_switch").notNull().default(true),
+    favorite: boolean("favorite").notNull().default(false),
+    autoConnect: boolean("auto_connect").notNull().default(false),
+    notes: text("notes"),
+    shareLink: text("share_link"),
+    rawConfig: jsonb("raw_config").$type<Record<string, unknown>>(),
+    validationStatus: text("validation_status").notNull().default("unknown"),
+    validationScore: integer("validation_score").notNull().default(0),
+    validationFindings: jsonb("validation_findings").$type<ValidationFinding[]>(),
+    validatedAt: timestamp("validated_at", { withTimezone: true }),
+    latencyMs: integer("latency_ms"),
+    jitterMs: real("jitter_ms"),
+    lastProbedAt: timestamp("last_probed_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("nora_profiles_group_idx").on(table.group)],
+);
+
+export const sessions = pgTable(
+  "nora_sessions",
+  {
+    id: serial("id").primaryKey(),
+    profileId: integer("profile_id"),
+    profileName: text("profile_name").notNull(),
+    state: text("state").notNull().default("idle"),
+    startedAt: timestamp("started_at", { withTimezone: true }).notNull().defaultNow(),
+    endedAt: timestamp("ended_at", { withTimezone: true }),
+    durationSec: integer("duration_sec").notNull().default(0),
+    rxBytes: integer("rx_bytes").notNull().default(0),
+    txBytes: integer("tx_bytes").notNull().default(0),
+    latencyMs: integer("latency_ms"),
+    jitterMs: real("jitter_ms"),
+    exitIp: text("exit_ip"),
+    endpointIp: text("endpoint_ip"),
+    handshakeMs: integer("handshake_ms"),
+    stages: jsonb("stages").$type<ProbeStage[]>(),
+    samples: jsonb("samples").$type<BandwidthSample[]>(),
+    transportSnapshot: text("transport_snapshot"),
+    note: text("note"),
+  },
+  (table) => [index("nora_sessions_started_idx").on(table.startedAt)],
+);
+
+export const routingRules = pgTable("nora_routing_rules", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  ruleType: text("rule_type").notNull(),
+  value: text("value").notNull(),
+  action: text("action").notNull(),
+  priority: integer("priority").notNull().default(100),
+  enabled: boolean("enabled").notNull().default(true),
+  category: text("category").notNull().default("custom"),
+  hitCount: integer("hit_count").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const logs = pgTable(
+  "nora_logs",
+  {
+    id: serial("id").primaryKey(),
+    level: text("level").notNull().default("info"),
+    scope: text("scope").notNull().default("core"),
+    message: text("message").notNull(),
+    meta: jsonb("meta").$type<Record<string, unknown>>(),
+    sessionId: integer("session_id"),
+    redactions: integer("redactions").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("nora_logs_created_idx").on(table.createdAt)],
+);
+
+export const diagnostics = pgTable("nora_diagnostics", {
+  id: serial("id").primaryKey(),
+  kind: text("kind").notNull(),
+  target: text("target").notNull(),
+  profileId: integer("profile_id"),
+  status: text("status").notNull(),
+  durationMs: integer("duration_ms").notNull().default(0),
+  summary: text("summary").notNull().default(""),
+  stages: jsonb("stages").$type<ProbeStage[]>(),
+  metrics: jsonb("metrics").$type<Record<string, number | string>>(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const runtime = pgTable("nora_runtime", {
+  id: integer("id").primaryKey(),
+  state: text("state").notNull().default("disconnected"),
+  activeProfileId: integer("active_profile_id"),
+  activeSessionId: integer("active_session_id"),
+  stage: text("stage").notNull().default("idle"),
+  rxBytes: integer("rx_bytes").notNull().default(0),
+  txBytes: integer("tx_bytes").notNull().default(0),
+  latencyMs: integer("latency_ms"),
+  jitterMs: real("jitter_ms"),
+  packetsIn: integer("packets_in").notNull().default(0),
+  packetsOut: integer("packets_out").notNull().default(0),
+  drops: integer("drops").notNull().default(0),
+  exitIp: text("exit_ip"),
+  endpointIp: text("endpoint_ip"),
+  connectedAt: timestamp("connected_at", { withTimezone: true }),
+  lastTickAt: timestamp("last_tick_at", { withTimezone: true }).notNull().defaultNow(),
+  samples: jsonb("samples").$type<BandwidthSample[]>(),
+  telemetrySource: text("telemetry_source").notNull().default("none"),
+  deviceModel: text("device_model"),
+  coreVersion: text("core_version"),
+  lastReportAt: timestamp("last_report_at", { withTimezone: true }),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const settings = pgTable("nora_settings", {
+  id: integer("id").primaryKey(),
+  operatorName: text("operator_name").notNull().default("local-operator"),
+  theme: text("theme").notNull().default("dark"),
+  accent: text("accent").notNull().default("violet"),
+  dnsPrimary: text("dns_primary").notNull().default("1.1.1.1"),
+  dnsSecondary: text("dns_secondary").notNull().default("1.0.0.1"),
+  dnsMode: text("dns_mode").notNull().default("encrypted"),
+  ipv6Mode: text("ipv6_mode").notNull().default("block"),
+  mtuDefault: integer("mtu_default").notNull().default(1420),
+  killSwitchDefault: boolean("kill_switch_default").notNull().default(true),
+  autoConnect: boolean("auto_connect").notNull().default(false),
+  strictValidation: boolean("strict_validation").notNull().default(true),
+  redactSecrets: boolean("redact_secrets").notNull().default(true),
+  latencyAlarmMs: integer("latency_alarm_ms").notNull().default(220),
+  dataCapGb: integer("data_cap_gb").notNull().default(50),
+  logLevel: text("log_level").notNull().default("info"),
+  onboarded: boolean("onboarded").notNull().default(false),
+  // appearance studio
+  accentHex: text("accent_hex").notNull().default("#8b5cf6"),
+  accent2Hex: text("accent_2_hex").notNull().default("#22d3ee"),
+  accent3Hex: text("accent_3_hex").notNull().default("#f472b6"),
+  glassBlur: integer("glass_blur").notNull().default(18),
+  glassAlpha: integer("glass_alpha").notNull().default(5),
+  auroraIntensity: integer("aurora_intensity").notNull().default(55),
+  gridOpacity: integer("grid_opacity").notNull().default(70),
+  radiusScale: text("radius_scale").notNull().default("default"),
+  density: text("density").notNull().default("comfortable"),
+  fontFamily: text("font_family").notNull().default("sans"),
+  bgPattern: text("bg_pattern").notNull().default("grid"),
+  motionLevel: text("motion_level").notNull().default("full"),
+  presetName: text("preset_name").notNull().default("Nora Violet"),
+  // notification policy
+  notifyEnabled: boolean("notify_enabled").notNull().default(true),
+  notifyLatency: boolean("notify_latency").notNull().default(true),
+  notifyCert: boolean("notify_cert").notNull().default(true),
+  notifyValidation: boolean("notify_validation").notNull().default(true),
+  notifyQuota: boolean("notify_quota").notNull().default(true),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const speedTests = pgTable(
+  "nora_speed_tests",
+  {
+    id: serial("id").primaryKey(),
+    profileId: integer("profile_id"),
+    profileName: text("profile_name").notNull(),
+    endpoint: text("endpoint").notNull().default(""),
+    mode: text("mode").notNull().default("standard"),
+    status: text("status").notNull().default("ok"),
+    downloadMbps: real("download_mbps").notNull().default(0),
+    uploadMbps: real("upload_mbps").notNull().default(0),
+    latencyMs: integer("latency_ms").notNull().default(0),
+    jitterMs: real("jitter_ms").notNull().default(0),
+    downloadBytes: integer("download_bytes").notNull().default(0),
+    uploadBytes: integer("upload_bytes").notNull().default(0),
+    durationMs: integer("duration_ms").notNull().default(0),
+    samples: jsonb("samples").$type<{ t: number; mbps: number; direction: string }[]>(),
+    note: text("note"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("nora_speed_tests_created_idx").on(table.createdAt)],
+);
+
+export const notifications = pgTable(
+  "nora_notifications",
+  {
+    id: serial("id").primaryKey(),
+    level: text("level").notNull().default("info"),
+    kind: text("kind").notNull().default("system"),
+    title: text("title").notNull(),
+    body: text("body").notNull().default(""),
+    source: text("source").notNull().default("engine"),
+    signature: text("signature").notNull().default(""),
+    read: boolean("read").notNull().default(false),
+    actionHref: text("action_href"),
+    actionLabel: text("action_label"),
+    meta: jsonb("meta").$type<Record<string, unknown>>(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [index("nora_notifications_created_idx").on(table.createdAt)],
+);
+
+export type ProfileRow = typeof profiles.$inferSelect;
+export type SpeedTestRow = typeof speedTests.$inferSelect;
+export type NotificationRow = typeof notifications.$inferSelect;
+export type NewProfileRow = typeof profiles.$inferInsert;
+export type SessionRow = typeof sessions.$inferSelect;
+export type RoutingRuleRow = typeof routingRules.$inferSelect;
+export type LogRow = typeof logs.$inferSelect;
+export type DiagnosticRow = typeof diagnostics.$inferSelect;
+export type RuntimeRow = typeof runtime.$inferSelect;
+export type SettingsRow = typeof settings.$inferSelect;

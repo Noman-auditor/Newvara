@@ -1,0 +1,4 @@
+// NORA TUNNEL — real Android client. No fake state: the UI only reports what libbox reports.
+plugins {
+    id "com.android.application" version "8.7.3" apply false
+}

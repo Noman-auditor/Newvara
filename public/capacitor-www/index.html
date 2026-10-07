@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#04050c" />
+    <title>NORA TUNNEL</title>
+    <style>
+      :root { --accent: #8b5cf6; --accent2: #22d3ee; --text: #e9ecff; --dim: #9aa3c7; }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0; min-height: 100vh; display: grid; place-items: center; padding: 24px;
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif; color: var(--text);
+        background: radial-gradient(120% 90% at 8% -10%, rgba(139,92,246,.28), transparent 55%),
+                    radial-gradient(100% 80% at 100% 0%, rgba(34,211,238,.2), transparent 50%),
+                    linear-gradient(180deg, #05060f, #04050c);
+      }
+      .card {
+        width: 100%; max-width: 420px; border-radius: 22px; padding: 22px;
+        background: rgba(255,255,255,.055); border: 1px solid rgba(148,163,184,.18);
+        backdrop-filter: blur(16px); box-shadow: 0 24px 60px rgba(3,4,12,.55);
+      }
+      .badge {
+        display: inline-flex; gap: 8px; align-items: center; font-size: 11px; letter-spacing: .18em;
+        text-transform: uppercase; color: var(--dim);
+      }
+      .dot { width: 9px; height: 9px; border-radius: 50%; background: #ffc857; box-shadow: 0 0 12px #ffc857; }
+      h1 { margin: 12px 0 6px; font-size: 21px; letter-spacing: -.01em; }
+      p { margin: 0 0 12px; font-size: 13px; line-height: 1.55; color: var(--dim); }
+      code { font-family: ui-monospace, monospace; font-size: 12px; color: var(--text); }
+      .actions { display: flex; gap: 8px; margin-top: 16px; }
+      button {
+        flex: 1; padding: 11px 14px; border-radius: 12px; border: 0; font-size: 13px; font-weight: 650;
+        background: linear-gradient(120deg, var(--accent), var(--accent2)); color: #05060f; cursor: pointer;
+      }
+      button.ghost { background: transparent; border: 1px solid rgba(148,163,184,.28); color: var(--text); font-weight: 500; }
+      .note { margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(148,163,184,.16); font-size: 11.5px; color: #6f7aa0; }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <span class="badge"><span class="dot"></span> workspace not configured</span>
+      <h1>Nora Tunnel shell</h1>
+      <p>
+        This APK is a shell around the NORA TUNNEL control plane. It has no bundled workspace URL yet, so there is
+        nothing to load — and it will not pretend a tunnel is up.
+      </p>
+      <p>
+        Rebuild the APK with <code>NORA_WEB_URL=https://your-workspace</code> (or run the
+        <code>Build Nora Tunnel APK</code> workflow with the <code>server_url</code> input) so the shell opens your
+        workspace.
+      </p>
+      <div class="actions">
+        <button id="open">Open last URL</button>
+        <button class="ghost" id="retry">Retry</button>
+      </div>
+      <p class="note">
+        Profiles, routing rules, diagnostics, sessions and logs are stored server-side in PostgreSQL. Without a
+        reachable control plane there is no config to validate and no state to report.
+      </p>
+    </div>
+    <script>
+      var stored = localStorage.getItem("nora.workspace.url") || "";
+      document.getElementById("open").addEventListener("click", function () {
+        var url = prompt("Control plane URL", stored || "https://");
+        if (!url) return;
+        localStorage.setItem("nora.workspace.url", url);
+        location.replace(url);
+      });
+      document.getElementById("retry").addEventListener("click", function () {
+        if (stored) location.replace(stored);
+      });
+      if (stored) document.getElementById("open").textContent = "Open " + stored;
+    </script>
+  </body>
+</html>

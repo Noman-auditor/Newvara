@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Nora Tunnel</string>
+    <string name="title_activity_main">Nora Tunnel</string>
+    <string name="package_name">com.nora.tunnel</string>
+    <string name="custom_url_scheme">com.nora.tunnel</string>
+</resources>

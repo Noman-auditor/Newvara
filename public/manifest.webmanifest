@@ -1,0 +1,23 @@
+{
+  "name": "NORA TUNNEL — Web Control Plane",
+  "short_name": "Nora Tunnel",
+  "description": "Validation-first tunnel control plane: profiles, routing studio, network diagnostics, honest connection state and security posture.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#04050c",
+  "theme_color": "#04050c",
+  "categories": ["utilities", "productivity", "security"],
+  "icons": [
+    { "src": "/icons/icon-512.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Connect / disconnect", "url": "/" },
+    { "name": "Profiles", "url": "/profiles" },
+    { "name": "Network Lab", "url": "/network-lab" },
+    { "name": "Install as APK", "url": "/apk" }
+  ]
+}

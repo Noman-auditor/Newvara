@@ -1,0 +1,11 @@
+<resources>
+    <color name="nora_bg">#04050C</color>
+    <color name="nora_surface">#0B0E1C</color>
+    <color name="nora_text">#E9ECFF</color>
+    <color name="nora_dim">#9AA3C7</color>
+    <color name="nora_accent">#8B5CF6</color>
+    <color name="nora_accent2">#22D3EE</color>
+    <color name="nora_good">#45F0B0</color>
+    <color name="nora_warn">#FFC857</color>
+    <color name="nora_bad">#FF6B8B</color>
+</resources>

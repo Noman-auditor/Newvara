@@ -1,0 +1,72 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.nora.tunnel.app-debug-4:/values_values.arsc.flat",
+            "map": [
+                {
+                    "source": "/app/android-native/app/src/main/res/values/ic_launcher_background.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "56",
+                        "endOffsets": "107"
+                    }
+                },
+                {
+                    "source": "/app/android-native/app/src/main/res/values/colors.xml",
+                    "from": {
+                        "startLines": "5,6,9,1,4,7,2,3,8",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "192,238,373,16,149,285,58,105,329",
+                        "endColumns": "45,46,42,41,42,43,46,43,43",
+                        "endOffsets": "233,280,411,53,187,324,100,144,368"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6,7,8,9,10,11",
+                        "startColumns": "4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "112,158,205,248,290,333,377,424,468",
+                        "endColumns": "45,46,42,41,42,43,46,43,43",
+                        "endOffsets": "153,200,243,285,328,372,419,463,507"
+                    }
+                },
+                {
+                    "source": "/app/android-native/app/src/main/res/values/themes.xml",
+                    "from": {
+                        "startLines": "1",
+                        "startColumns": "4",
+                        "startOffsets": "16",
+                        "endLines": "8",
+                        "endColumns": "12",
+                        "endOffsets": "521"
+                    },
+                    "to": {
+                        "startLines": "16",
+                        "startColumns": "4",
+                        "startOffsets": "771",
+                        "endLines": "23",
+                        "endColumns": "12",
+                        "endOffsets": "1276"
+                    }
+                },
+                {
+                    "source": "/app/android-native/app/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "1,4,3,2",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "16,172,116,65",
+                        "endColumns": "48,102,55,50",
+                        "endOffsets": "60,270,167,111"
+                    },
+                    "to": {
+                        "startLines": "12,13,14,15",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "512,561,664,720",
+                        "endColumns": "48,102,55,50",
+                        "endOffsets": "556,659,715,766"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/nora_bg"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/nora_surface"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NORA TUNNEL"
+                android:letterSpacing="0.22"
+                android:textSize="11sp"
+                android:textColor="@color/nora_dim" />
+
+            <TextView
+                android:id="@+id/state_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="IDLE"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/nora_dim" />
+
+            <TextView
+                android:id="@+id/detail_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="12sp"
+                android:textColor="@color/nora_dim"
+                android:text="Not connected. Nothing is being routed." />
+
+            <TextView
+                android:id="@+id/counters_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="monospace"
+                android:textSize="13sp"
+                android:textColor="@color/nora_text"
+                android:text="down 0 B   up 0 B" />
+
+            <TextView
+                android:id="@+id/core_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="11sp"
+                android:textColor="@color/nora_dim"
+                android:text="core: not loaded" />
+
+            <TextView
+                android:id="@+id/report_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textSize="11sp"
+                android:textColor="@color/nora_dim"
+                android:text="control-plane reporting: idle" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="CONTROL PLANE"
+            android:letterSpacing="0.18"
+            android:textSize="10sp"
+            android:textColor="@color/nora_dim" />
+
+        <EditText
+            android:id="@+id/url_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:hint="https://your-workspace.example.com"
+            android:inputType="textUri"
+            android:textColor="@color/nora_text"
+            android:textColorHint="@color/nora_dim"
+            android:fontFamily="monospace"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/token_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:hint="device token (optional)"
+            android:inputType="textPassword"
+            android:textColor="@color/nora_text"
+            android:textColorHint="@color/nora_dim"
+            android:fontFamily="monospace"
+            android:textSize="12sp" />
+
+        <Spinner
+            android:id="@+id/profile_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" />
+
+        <CheckBox
+            android:id="@+id/auto_connect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="Auto-connect the selected profile when the app opens"
+            android:textColor="@color/nora_text"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/boot_start"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start after device boot"
+            android:textColor="@color/nora_text"
+            android:textSize="12sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Save" />
+
+            <Button
+                android:id="@+id/health_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="Test" />
+
+            <Button
+                android:id="@+id/refresh_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.4"
+                android:layout_marginStart="8dp"
+                android:text="Fetch profiles" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/connect_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="14dp"
+            android:text="Connect"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#05060F"
+            android:background="@color/nora_accent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="CORE LOG"
+            android:letterSpacing="0.18"
+            android:textSize="10sp"
+            android:textColor="@color/nora_dim" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:layout_marginTop="6dp"
+            android:background="@color/nora_surface"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/log_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:textSize="10sp"
+                android:textColor="@color/nora_text"
+                android:text="core logs appear here as the tunnel runs" />
+        </ScrollView>
+
+        <Button
+            android:id="@+id/clear_logs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Clear log buffer" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:textSize="10sp"
+            android:textColor="@color/nora_dim"
+            android:text="The tunnel runs the real sing-box core (compiled from SagerNet/sing-box with gomobile) inside Android's VpnService. Counters and logs come from that core. If the core is unavailable or the TUN cannot be established, the app says so instead of showing a false 'connected'." />
+    </LinearLayout>
+</ScrollView>

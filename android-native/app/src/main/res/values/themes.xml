@@ -1,0 +1,10 @@
+<resources>
+    <style name="NoraTheme" parent="@android:style/Theme.DeviceDefault.NoActionBar">
+        <item name="android:windowBackground">@color/nora_bg</item>
+        <item name="android:colorAccent">@color/nora_accent</item>
+        <item name="android:textColorPrimary">@color/nora_text</item>
+        <item name="android:textColorSecondary">@color/nora_dim</item>
+        <item name="android:statusBarColor">@color/nora_bg</item>
+        <item name="android:navigationBarColor">@color/nora_bg</item>
+    </style>
+</resources>

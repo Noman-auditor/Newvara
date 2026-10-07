@@ -1,0 +1,7 @@
+com.nora.tunnel.app-pngs-0 /app/android-native/app/build/generated/res/pngs/debug
+com.nora.tunnel.app-resValues-1 /app/android-native/app/build/generated/res/resValues/debug
+com.nora.tunnel.app-packageDebugResources-2 /app/android-native/app/build/intermediates/incremental/debug/packageDebugResources/merged.dir
+com.nora.tunnel.app-packageDebugResources-3 /app/android-native/app/build/intermediates/incremental/debug/packageDebugResources/stripped.dir
+com.nora.tunnel.app-debug-4 /app/android-native/app/build/intermediates/merged_res/debug/mergeDebugResources
+com.nora.tunnel.app-debug-5 /app/android-native/app/src/debug/res
+com.nora.tunnel.app-main-6 /app/android-native/app/src/main/res
