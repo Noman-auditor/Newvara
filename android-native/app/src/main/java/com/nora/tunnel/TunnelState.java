@@ -35,7 +35,7 @@ public final class TunnelState {
     private static volatile long downlinkBps;
     private static volatile String coreVersion = "";
     private static volatile int profileId;
-    private static volatile String profileName;
+    private static volatile String profileName = "";
     private static volatile String exitAddress = "";
     private static volatile long lastReportAt;
     private static volatile String lastReportResult = "";
