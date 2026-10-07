@@ -19,7 +19,7 @@ need unzip
 [ -n "${ANDROID_HOME:-}" ] || { echo "set ANDROID_HOME to your Android SDK" >&2; exit 1; }
 [ -n "${ANDROID_NDK_HOME:-}" ] || { echo "set ANDROID_NDK_HOME to an installed NDK (r26+)" >&2; exit 1; }
 
-mkdir -p "$WORK"
+mkdir -p "$WORK" "$OUT"
 export GOPATH="$WORK/gopath"
 export GOCACHE="$WORK/gocache"
 export PATH="$(go env GOPATH)/bin:$PATH"
