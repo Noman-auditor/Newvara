@@ -39,7 +39,7 @@ rm -rf build
 echo "==> binding libbox for android/arm64"
 gomobile bind -v \
   -o "$OUT/libbox.aar" \
-  -target android/arm64 \
+  -target android/arm64,android/arm \
   -androidapi 24 \
   -javapkg=io.nekohasekai \
   -libname=box \
